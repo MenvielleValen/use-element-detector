@@ -1,0 +1,37 @@
+{
+  "name": "use-detector-hook",
+  "version": "1.0.4",
+  "description": "A React hook library to handle all kinds of timers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MenvielleValen/use-element-detector"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "elementdetector",
+    "ref",
+    "use-element-detector"
+  ],
+  "type": "module",
+  "main": "dist/use-element-detector-js.umd.js",
+  "module": "dist/use-element-detector-js.es.js",
+  "types": "dist/use-element-detector-js.es.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Valentin Menvielle Candia",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/use-element-detector-js.es.js",
+      "require": "./dist/use-element-detector-js.umd.js",
+      "types": "./dist/use-element-detector-js.es.d.ts",
+      "default": "./dist/use-element-detector-js.es.js"
+    }
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ]
+}

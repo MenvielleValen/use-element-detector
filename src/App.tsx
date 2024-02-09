@@ -1,19 +1,25 @@
-import { useRef, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { useElementDetector } from './hooks';
+import { useRef, useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
+import { useElementDetector } from "./hooks";
 
 function App() {
   const [count, setCount] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
-  const isVisible = useElementDetector(ref, {threshold: 1}, {
-    onTriggerEnter: () => {
-      setCount(5000)
-    },
-    onTriggerExit: () => console.log("TRIGGER EXIT"),
-    onChangeVisibility: (visibility) => console.log(`ON CHANGE ${visibility}`)
-  });
+  const isVisible = useElementDetector(
+    ref,
+    { threshold: 1 },
+    {
+      onTriggerEnter: () => {
+        setCount(5000);
+      },
+      onTriggerExit: () => console.log("TRIGGER EXIT"),
+      onChangeVisibility: (visibility) =>
+        console.log(`ON CHANGE ${visibility}`),
+      onFirstVisible: () => console.log("FIRST TIME ON VIEWPORT"),
+    }
+  );
 
   return (
     <>
@@ -25,23 +31,31 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>{isVisible ? 'Element Visible' : 'Element not visible'}</h1>
-      <div className="card" style={{backgroundColor: isVisible ? 'green' : '#fff'}}>
+      <h1>{isVisible ? "Element Visible" : "Element not visible"}</h1>
+      <div
+        className="card"
+        style={{ backgroundColor: isVisible ? "green" : "#fff" }}
+      >
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
-          ELEMENT REF
-        </p>
+        <p>ELEMENT REF</p>
       </div>
-      <div style={{height: 800, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+      <div
+        style={{
+          height: 800,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <p>Scroll</p>
       </div>
-      <p className="read-the-docs"  ref={ref}>
+      <p className="read-the-docs" ref={ref}>
         Click on the Vite and React logos to learn more
       </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

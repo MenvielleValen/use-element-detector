@@ -11,6 +11,7 @@ export interface Callbacks {
   ) => void;
   onTriggerEnter?: (ref: RefObject<HTMLElement>) => void;
   onTriggerExit?: (ref: RefObject<HTMLElement>) => void;
+  onFirstVisible?: (ref: RefObject<HTMLElement>) => void;
 }
 
 /**
@@ -26,6 +27,7 @@ export const useElementDetector = (
   callbacks?: Callbacks
 ): boolean => {
   const [isVisible, setIsVisible] = useState(false); // State to track visibility of the element
+  const [firstVisible, setFirstVisible] = useState(false); // State to track if the element is visible for the first time
 
   if (options?.threshold && options.threshold > 1) {
     throw new Error("'threshold' must be between 0 and 1");
@@ -41,6 +43,11 @@ export const useElementDetector = (
         // Handle enter and exit triggers with additional checks
         if (isIntersecting) {
           callbacks?.onTriggerEnter?.(ref);
+          // Call onFirstVisible callback if it's the first time the element is visible
+          if (!firstVisible) {
+            setFirstVisible(true);
+            callbacks?.onFirstVisible?.(ref);
+          }
         } else {
           callbacks?.onTriggerExit?.(ref);
         }
@@ -62,7 +69,7 @@ export const useElementDetector = (
         observer.unobserve(ref.current);
       }
     };
-  }, [ref]); // Re-run effect when dependencies change
+  }, [ref, firstVisible]); // Re-run effect when dependencies change
 
   return isVisible; // Return the visibility state
 };
